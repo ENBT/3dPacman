@@ -175,7 +175,7 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
-
+    //Test
     public static void damagePlayer(int dmg)
     {
         health -= dmg;
