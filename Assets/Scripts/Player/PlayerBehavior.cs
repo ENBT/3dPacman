@@ -15,6 +15,9 @@ public class PlayerBehavior : MonoBehaviour
     private bool crouching = false;
     private float fallSpeed = 1;
 
+	[SerializeField]
+	Transform playerModel;
+
     CharacterController body;
     Vector3 inp = Vector3.zero;
 
@@ -82,7 +85,7 @@ public class PlayerBehavior : MonoBehaviour
             if (crouching == false)
             {
                 movespeed *= 0.75f;
-                transform.localScale = new Vector3(1, .5f, 1);
+				playerModel.localScale = new Vector3(1, .5f, 1);
                 SphereCollider sphere = transform.GetComponent<SphereCollider>();
                 sphere.radius *= 0.3f;
                 body.radius *= 0.3f;
@@ -94,8 +97,8 @@ public class PlayerBehavior : MonoBehaviour
             if (crouching == true)
             {
                 movespeed /= 0.75f;
-                transform.localScale = new Vector3(1, 1.0f, 1);
-                SphereCollider sphere = transform.GetComponent<SphereCollider>();
+				playerModel.localScale = new Vector3(1, 1.0f, 1);
+				SphereCollider sphere = transform.GetComponent<SphereCollider>();
                 sphere.radius = 0.5f;
                 body.radius = 0.5f;
             }
