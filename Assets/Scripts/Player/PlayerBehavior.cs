@@ -147,7 +147,7 @@ public class PlayerBehavior : MonoBehaviour
             invincible = false;
     }
 
-    void onCollisionEnter(Collision c)
+    void OnCollisionEnter(Collision c)
     {
         if (c.gameObject.tag == "GoodPellet")
         {
@@ -161,7 +161,7 @@ public class PlayerBehavior : MonoBehaviour
         }
         if (c.gameObject.tag == "Fruit")
         {
-            health += 15;
+            //heal player
             //gain points
             Destroy(c.gameObject);
         }
