@@ -147,7 +147,7 @@ public class PlayerBehavior : MonoBehaviour
             invincible = false;
     }
 
-    void OnCollisionEnter(Collision c)
+    void iOnCollisionEnter(Collision c)
     {
         if (c.gameObject.tag == "GoodPellet")
         {
