@@ -7,7 +7,6 @@ public class Enemy : MonoBehaviour {
     //FIX SPEED
     
 
-    /// Alright fuckers let's get this done
     /// Daily Log Entry, Log 01: The search for truth relies on me. While the feeble humans will control our wonderful character,
     /// I must encapsulate the true emotion of inteliigence, of the bloodthirsty savagery of a wolf pack on the hunt.
     /// My goal for this is to create something more.
@@ -34,20 +33,27 @@ public class Enemy : MonoBehaviour {
     private Vector3 Origin;                     //Origin position the enemy is travelng from.
     private Vector3 Target;                     //The target the enemy is pathing to
 
-    private float RandomRoam_Timer;             //Timer to handle various behaviors
-    private float RandomRoam_TimerMax = 5f;
+    private float RandomRoam_Timer;             //Timer to handle random roam selection
+    [SerializeField]
+    private float RandomRoamTimer = 5f;     //Selects a new roam location every x seconds.
 
-    private float MovementStuck_Timer;          //Timer to handle various behaviors
-    private float MovementStuck_TimerMax = .25f;
+    private float MovementStuck_Timer;          //Timer to handle enemy getting stuck on things
+    [SerializeField]
+    private float MovementStuckTimer = .25f;    //Checks to see if enemy is stuck every x seconds.
 
     private float SpawnPellet_Timer;            //Timer to handle pellet spawning
-    private float SpawnPellet_TimerMax = 5f;
+    [SerializeField]
+    private float SpawnPelletTimer = 5f;        //Attempts to spawn pellets every x seconds. 
 
     private float PlayerHit_Timer;              //Timer to handle various behaviors
-    private float PlayerHit_TimerMax = 5f;
+    [SerializeField]
+    private float PlayerHitTimer = 5f;      //Slows enemy down for x seconds after catching player.
 
     private bool HitPlayer = false;
+    [SerializeField]
     private double HitPlayerSpeed = 5;
+    [SerializeField]
+    private double HitPlayerMultiplier = .25f;  //Multiplier of how fast enemy moves after he hits the player.
 
     private double DistanceTraveled;            //Distance the enemy has traveled along a path. Used to help him out if he gets stuck
 
@@ -89,16 +95,6 @@ public class Enemy : MonoBehaviour {
     /// </summary>
     private void CalcPlayerDistance()
     {
-        if(HitPlayer)
-        {
-            if (PlayerHit_Timer > PlayerHit_TimerMax)
-            {
-                HitPlayer = false;
-                Speed = HitPlayerSpeed;
-            }
-                
-        }
-
         double distance = Vector3.Distance(this.transform.position, player.transform.position);
         if (!SeesPlayer && distance <= SightDistance)
         {
@@ -111,7 +107,7 @@ public class Enemy : MonoBehaviour {
         {
             Debug.Log("End Chase!");
             SeesPlayer = false;
-            RandomRoam_Timer = 5;
+            RandomRoam_Timer = RandomRoamTimer;
             MovementStuck_Timer = 0;
         }
     }
@@ -121,8 +117,9 @@ public class Enemy : MonoBehaviour {
     /// </summary>
     private void ChasePlayer()
     {
-        Target = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
-        this.transform.LookAt(player.transform);
+        Target = player.transform.position;
+        this.transform.LookAt(Target);
+
         this.transform.position = Vector3.MoveTowards(this.transform.position, Target, (float)(Speed / 100f));
     }
 
@@ -131,7 +128,7 @@ public class Enemy : MonoBehaviour {
     /// </summary>
     private void Roam()
     {
-        if(RandomRoam_Timer >= RandomRoam_TimerMax)
+        if(RandomRoam_Timer >= RandomRoamTimer)
         {
             Target = this.transform.position;
             Target.x += Random.Range(-10, 10);
@@ -146,7 +143,7 @@ public class Enemy : MonoBehaviour {
         if (distance < .1)
         {
             Target = this.transform.position;
-            RandomRoam_Timer = RandomRoam_TimerMax;
+            RandomRoam_Timer = RandomRoamTimer;
             return;
         }
             
@@ -154,7 +151,7 @@ public class Enemy : MonoBehaviour {
         this.transform.LookAt(Target);
         this.transform.position = Vector3.MoveTowards(this.transform.position, Target, (float)(Speed / 100f));
 
-        if (MovementStuck_Timer >= MovementStuck_TimerMax)
+        if (MovementStuck_Timer >= MovementStuckTimer)
         {
             //If enemy gets stuck on something and hasn't moved much, stop spazzing all over the place.
             double traveled = Vector3.Distance(this.transform.position, Origin);
@@ -162,7 +159,7 @@ public class Enemy : MonoBehaviour {
             {
                 Target = this.transform.position;
                 Debug.Log("Fuck this shit, I'm not moving.");
-                RandomRoam_Timer = RandomRoam_TimerMax;
+                RandomRoam_Timer = RandomRoamTimer;
                 return;
             }
             Origin = this.transform.position;
@@ -177,7 +174,7 @@ public class Enemy : MonoBehaviour {
     /// </summary>
     private void SpawnPellet()
     {
-        if(SpawnPellet_Timer >= SpawnPellet_TimerMax)
+        if(SpawnPellet_Timer >= SpawnPelletTimer)
         {
 
             if (Pellets.Count >= MaxPellets)
@@ -198,6 +195,7 @@ public class Enemy : MonoBehaviour {
 
             Debug.Log("Pooping...");
             GameObject temp = GameObject.Instantiate(Poop);
+            temp.GetComponent<Pellets>().owner = this.gameObject;
             temp.transform.position = this.transform.position;
 
             Pellets.Add(temp);
@@ -226,19 +224,21 @@ public class Enemy : MonoBehaviour {
                 index = i;
                 break;
             }
-                
         }
 
         if (index >= 0)
             Pellets.RemoveAt(index);
     }
 
+    /// <summary>
+    /// Collision Events
+    /// </summary>
+    /// <param name="obj"></param>
     void OnTriggerEnter(Collider obj)
     {
         if (obj.gameObject.tag == "Player")
         {
             Debug.Log(gameObject.name + ": YARHGGGGG I GOT YEE");
-            //Damage Player
             PlayerBehavior.damagePlayer(25);
             HitPlayerAnimation();
         }
@@ -249,12 +249,13 @@ public class Enemy : MonoBehaviour {
     /// </summary>
     private void HitPlayerAnimation()
     {
+        if (HitPlayer)
+            return;
         HitPlayer = true;
-        PlayerHit_Timer = 0;
+        PlayerHit_Timer = 0f;
 
         HitPlayerSpeed = Speed;
-        Speed = Speed * .25f;
-
+        Speed = Speed * HitPlayerMultiplier;
     }
 
 
@@ -269,6 +270,15 @@ public class Enemy : MonoBehaviour {
             SpawnPellet_Timer = 1000;
         if (PlayerHit_Timer > 1000)
             PlayerHit_Timer = 1000;
+
+        if (HitPlayer)
+        {
+            if (PlayerHit_Timer >= PlayerHitTimer)
+            {
+                HitPlayer = false;
+                Speed = HitPlayerSpeed;
+            }
+        }
     }
 
 

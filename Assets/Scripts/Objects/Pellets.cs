@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Pellets : MonoBehaviour {
-    
+
+    public GameObject owner = null;             //Owner of the pellet. Used to keep track of which enemy spawned the pellet.
+
+
 	void Start () {
 		
 	}
@@ -29,6 +32,10 @@ public class Pellets : MonoBehaviour {
             if (obj.gameObject.tag == "Player")
             {
                 Debug.Log(gameObject.name + "Collided with " + obj.gameObject.name);
+
+                if (owner != null)
+                    owner.GetComponent<Enemy>().DeletePellet(this.gameObject);
+
                 Destroy(gameObject);
             }
         }
