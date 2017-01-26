@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour {
 
+    //FIX SPEED
+    
+
     /// Alright fuckers let's get this done
     /// Daily Log Entry, Log 01: The search for truth relies on me. While the feeble humans will control our wonderful character,
     /// I must encapsulate the true emotion of inteliigence, of the bloodthirsty savagery of a wolf pack on the hunt.
@@ -118,8 +121,8 @@ public class Enemy : MonoBehaviour {
     /// </summary>
     private void ChasePlayer()
     {
-        Target = player.transform.position;
-        this.transform.LookAt(Target);
+        Target = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
+        this.transform.LookAt(player.transform);
         this.transform.position = Vector3.MoveTowards(this.transform.position, Target, (float)(Speed / 100f));
     }
 
@@ -236,6 +239,7 @@ public class Enemy : MonoBehaviour {
         {
             Debug.Log(gameObject.name + ": YARHGGGGG I GOT YEE");
             //Damage Player
+            PlayerBehavior.damagePlayer(25);
             HitPlayerAnimation();
         }
     }
