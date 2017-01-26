@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
 {
-
+    [SerializeField]
     public static int health = 100;
+    [SerializeField]
     public static int energy = 100;
     public static bool invincible = false;
     public static bool mega = false;
@@ -45,6 +46,7 @@ public class PlayerBehavior : MonoBehaviour
         invincibility();
         megaChomp();
         Debug.Log(energy);
+        Debug.Log("Health: " + health);
         if (mega == true)
             megaTimer();
     }
@@ -88,7 +90,9 @@ public class PlayerBehavior : MonoBehaviour
 				playerModel.localScale = new Vector3(1, .5f, 1);
                 SphereCollider sphere = transform.GetComponent<SphereCollider>();
                 sphere.radius *= 0.3f;
-                body.radius *= 0.3f;
+                body.radius = .3f;
+                body.height = .25f;
+                body.center = new Vector3(0, -.15f, 0);
             }
             crouching = true;
         }
@@ -100,7 +104,9 @@ public class PlayerBehavior : MonoBehaviour
 				playerModel.localScale = new Vector3(1, 1.0f, 1);
 				SphereCollider sphere = transform.GetComponent<SphereCollider>();
                 sphere.radius = 0.5f;
-                body.radius = 0.5f;
+                body.height = 1f;
+                body.radius = .5f;
+                body.center = new Vector3(0, 0, 0);
             }
             crouching = false;
         }
@@ -137,7 +143,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             mega = false;
             movespeed *= 2;
-            energy = 100;
+            
         }
     }
 
@@ -147,11 +153,12 @@ public class PlayerBehavior : MonoBehaviour
             invincible = false;
     }
 
-    void iOnCollisionEnter(Collision c)
+    void OnTriggerEnter(Collider c)
     {
         if (c.gameObject.tag == "GoodPellet")
         {
             //gain points
+            healEnergy(10);
             Destroy(c.gameObject);
         }
         if (c.gameObject.tag == "BadPellet")
@@ -161,7 +168,7 @@ public class PlayerBehavior : MonoBehaviour
         }
         if (c.gameObject.tag == "Fruit")
         {
-            //heal player
+            healHealth(15);
             //gain points
             Destroy(c.gameObject);
         }
@@ -171,11 +178,11 @@ public class PlayerBehavior : MonoBehaviour
             invincible = true;
             Destroy(c.gameObject);
         }
-        if (c.gameObject.tag == "Enemy")
-        {
-            damagePlayer(25);
-            Destroy(c.gameObject);                      // REPLACE WITH ENEMY INTERACTION
-        }
+        //if (c.gameObject.tag == "Enemy")
+        //{
+        //    damagePlayer(25);
+        //    Destroy(c.gameObject);                      // REPLACE WITH ENEMY INTERACTION
+        //}
     }
 
     //Test
@@ -184,5 +191,20 @@ public class PlayerBehavior : MonoBehaviour
         health -= dmg;
         if (health < 0)
             health = 0;
+    }
+
+    public static void healEnergy(int nrg)
+    {
+        energy += nrg;
+        if (energy > 100)
+            energy = 100;
+    }
+
+
+    public static void healHealth(int hp)
+    {
+        health += hp;
+        if (health > 100)
+            health = 100;
     }
 }
