@@ -7,7 +7,7 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField]
     public static int health = 100;
     [SerializeField]
-    public static int energy = 100;
+    public static int energy = 0;
     public static bool invincible = false;
     public static bool mega = false;
 
@@ -16,8 +16,8 @@ public class PlayerBehavior : MonoBehaviour
     private bool crouching = false;
     private float fallSpeed = 1;
 
-	[SerializeField]
-	Transform playerModel;
+    [SerializeField]
+    Transform playerModel;
 
     CharacterController body;
     Vector3 inp = Vector3.zero;
@@ -87,7 +87,7 @@ public class PlayerBehavior : MonoBehaviour
             if (crouching == false)
             {
                 movespeed *= 0.75f;
-				playerModel.localScale = new Vector3(1, .5f, 1);
+                playerModel.localScale = new Vector3(1, .5f, 1);
                 SphereCollider sphere = transform.GetComponent<SphereCollider>();
                 sphere.radius *= 0.3f;
                 body.radius = .3f;
@@ -96,13 +96,13 @@ public class PlayerBehavior : MonoBehaviour
             }
             crouching = true;
         }
-        if(Input.GetKeyUp(KeyCode.LeftControl))
+        else
         {
             if (crouching == true)
             {
                 movespeed /= 0.75f;
-				playerModel.localScale = new Vector3(1, 1.0f, 1);
-				SphereCollider sphere = transform.GetComponent<SphereCollider>();
+                playerModel.localScale = new Vector3(1, 1.0f, 1);
+                SphereCollider sphere = transform.GetComponent<SphereCollider>();
                 sphere.radius = 0.5f;
                 body.height = 1f;
                 body.radius = .5f;
@@ -120,7 +120,7 @@ public class PlayerBehavior : MonoBehaviour
             fallSpeed = 0.01f;
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) || body.isGrounded)
+        else
         {
             fallSpeed = 1.0f;
         }
@@ -143,7 +143,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             mega = false;
             movespeed *= 2;
-            
+
         }
     }
 
