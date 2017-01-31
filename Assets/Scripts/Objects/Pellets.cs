@@ -12,7 +12,8 @@ public class Pellets : MonoBehaviour {
 	}
 	
 	void Update () {
-		
+        this.gameObject.transform.Rotate(15 * Time.deltaTime, 30 * Time.deltaTime, 45 * Time.deltaTime);
+        
 	}
 
     
@@ -36,15 +37,15 @@ public class Pellets : MonoBehaviour {
 
                 if (owner != null)
                     owner.GetComponent<Enemy>().DeletePellet(this.gameObject);
-
-                Destroy(gameObject);
+                if(PlayerBehavior.invincible == false)
+                    Destroy(gameObject);
             }
         }
         if (gameObject.tag == "Fruit")
         {
             if (obj.gameObject.tag == "Player")
             {
-                GameManager.score += 1500;
+                GameManager.score += 1000;
                 //Debug.Log(gameObject.name + "Collided with " + obj.gameObject.name);
                 Destroy(gameObject);
             }
@@ -53,6 +54,7 @@ public class Pellets : MonoBehaviour {
         {
             if (obj.gameObject.tag == "Player" && PlayerBehavior.mega == true)
             {
+                GameManager.score += 500;
                 //Debug.Log(gameObject.name + "Collided with " + obj.gameObject.name);
                 Destroy(gameObject);
             }

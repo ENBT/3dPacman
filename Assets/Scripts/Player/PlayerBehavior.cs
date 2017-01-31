@@ -153,7 +153,7 @@ public class PlayerBehavior : MonoBehaviour
 
     void invincibility()
     {
-        if (invincible == true && Time.time - timer1 >= 5)
+        if (invincible == true && Time.time - timer1 >= 10)
             invincible = false;
     }
 
@@ -161,22 +161,19 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (c.gameObject.tag == "GoodPellet")
         {
-            //gain points
             healEnergy(10);
-            Destroy(c.gameObject);
         }
         if (c.gameObject.tag == "BadPellet")
         {
-            if(mega == false)
+            if(mega == false && invincible == false)
                 damagePlayer(5);
             if (mega == true)
                 GameManager.score += 100;
-            Destroy(c.gameObject);
+
         }
         if (c.gameObject.tag == "Fruit")
         {
             healHealth(15);
-            //gain points
             Destroy(c.gameObject);
         }
         if (c.gameObject.tag == "Super" && mega == true)
@@ -185,11 +182,6 @@ public class PlayerBehavior : MonoBehaviour
             invincible = true;
             Destroy(c.gameObject);
         }
-        //if (c.gameObject.tag == "Enemy")
-        //{
-        //    damagePlayer(25);
-        //    Destroy(c.gameObject);                      // REPLACE WITH ENEMY INTERACTION
-        //}
     }
 
     //Test
