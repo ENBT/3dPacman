@@ -24,7 +24,7 @@ public class Pellets : MonoBehaviour {
             if(obj.gameObject.tag == "Player")
             {
                 GameManager.score += 100;
-                Debug.Log(gameObject.name + "Collided with " + obj.gameObject.name);
+                //Debug.Log(gameObject.name + "Collided with " + obj.gameObject.name);
                 Destroy(gameObject);
             }
         }
@@ -32,7 +32,7 @@ public class Pellets : MonoBehaviour {
         {
             if (obj.gameObject.tag == "Player")
             {
-                Debug.Log(gameObject.name + "Collided with " + obj.gameObject.name);
+                //Debug.Log(gameObject.name + "Collided with " + obj.gameObject.name);
 
                 if (owner != null)
                     owner.GetComponent<Enemy>().DeletePellet(this.gameObject);
@@ -45,15 +45,15 @@ public class Pellets : MonoBehaviour {
             if (obj.gameObject.tag == "Player")
             {
                 GameManager.score += 1500;
-                Debug.Log(gameObject.name + "Collided with " + obj.gameObject.name);
+                //Debug.Log(gameObject.name + "Collided with " + obj.gameObject.name);
                 Destroy(gameObject);
             }
         }
         if (gameObject.tag == "Super")
         {
-            if (obj.gameObject.tag == "Player")
+            if (obj.gameObject.tag == "Player" && PlayerBehavior.mega == true)
             {
-                Debug.Log(gameObject.name + "Collided with " + obj.gameObject.name);
+                //Debug.Log(gameObject.name + "Collided with " + obj.gameObject.name);
                 Destroy(gameObject);
             }
         }

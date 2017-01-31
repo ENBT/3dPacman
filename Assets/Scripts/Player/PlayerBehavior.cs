@@ -8,6 +8,7 @@ public class PlayerBehavior : MonoBehaviour
     public static int health = 100;
     [SerializeField]
     public static int energy = 0;
+
     public static bool invincible = false;
     public static bool mega = false;
 
@@ -34,12 +35,16 @@ public class PlayerBehavior : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        energy = 100;
         body = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        
+        Debug.Log(mega);
+
         move();
         glide();
         crouch();
@@ -128,7 +133,7 @@ public class PlayerBehavior : MonoBehaviour
 
     void megaChomp()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && energy == 100)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && energy == 100 && mega == false)
         {
             mega = true;
             movespeed /= 2;
@@ -143,7 +148,6 @@ public class PlayerBehavior : MonoBehaviour
         {
             mega = false;
             movespeed *= 2;
-
         }
     }
 
@@ -163,7 +167,10 @@ public class PlayerBehavior : MonoBehaviour
         }
         if (c.gameObject.tag == "BadPellet")
         {
-            damagePlayer(5);
+            if(mega == false)
+                damagePlayer(5);
+            if (mega == true)
+                GameManager.score += 100;
             Destroy(c.gameObject);
         }
         if (c.gameObject.tag == "Fruit")
