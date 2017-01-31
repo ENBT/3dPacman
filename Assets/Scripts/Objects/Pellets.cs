@@ -23,6 +23,7 @@ public class Pellets : MonoBehaviour {
         {
             if(obj.gameObject.tag == "Player")
             {
+                GameManager.score += 100;
                 Debug.Log(gameObject.name + "Collided with " + obj.gameObject.name);
                 Destroy(gameObject);
             }
@@ -43,6 +44,7 @@ public class Pellets : MonoBehaviour {
         {
             if (obj.gameObject.tag == "Player")
             {
+                GameManager.score += 1500;
                 Debug.Log(gameObject.name + "Collided with " + obj.gameObject.name);
                 Destroy(gameObject);
             }
