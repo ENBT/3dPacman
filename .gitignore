@@ -28,3 +28,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Assets/Prefabs/Environment/Misc/Rocks/Materials/Rock01.mat
+Assets/Prefabs/Environment/Misc/Rocks/Materials/Rock02.mat
+Assets/Prefabs/Environment/Misc/Rocks/Materials/Rock01.mat
+Assets/Prefabs/Environment/Misc/Rocks/Materials/Rock02.mat.meta
