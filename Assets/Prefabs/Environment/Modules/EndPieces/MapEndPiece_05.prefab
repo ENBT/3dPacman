@@ -776,7 +776,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4561590875416640}
   m_Layer: 0
-  m_Name: EndPiece2
+  m_Name: MapEndPiece_05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
