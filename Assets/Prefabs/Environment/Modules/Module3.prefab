@@ -301,7 +301,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4173618062777100}
   m_Layer: 0
-  m_Name: Module 3
+  m_Name: Module3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
