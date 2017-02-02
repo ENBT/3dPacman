@@ -98,14 +98,12 @@ public class Enemy : MonoBehaviour {
         double distance = Vector3.Distance(this.transform.position, player.transform.position);
         if (!SeesPlayer && distance <= SightDistance)
         {
-            Debug.Log("Start Chase!");
             SeesPlayer = true;
             RandomRoam_Timer = 0;
             MovementStuck_Timer = 0;
         }
         else if (SeesPlayer && distance > LoseSightDistance)
         {
-            Debug.Log("End Chase!");
             SeesPlayer = false;
             RandomRoam_Timer = RandomRoamTimer;
             MovementStuck_Timer = 0;
@@ -192,8 +190,6 @@ public class Enemy : MonoBehaviour {
 
             }
             
-
-            Debug.Log("Pooping...");
             GameObject temp = GameObject.Instantiate(Poop);
             temp.GetComponent<Pellets>().owner = this.gameObject;
             temp.transform.position = this.transform.position;
@@ -238,9 +234,16 @@ public class Enemy : MonoBehaviour {
     {
         if (obj.gameObject.tag == "Player")
         {
-            Debug.Log(gameObject.name + ": YARHGGGGG I GOT YEE");
-            PlayerBehavior.damagePlayer(25);
-            HitPlayerAnimation();
+            if (PlayerBehavior.mega == true)
+            {
+                GameManager.score += 1500;
+                Destroy(this.gameObject);
+            }
+            else if (PlayerBehavior.invincible == false)
+            {
+                PlayerBehavior.damagePlayer(25);
+                HitPlayerAnimation();
+            }
         }
     }
 

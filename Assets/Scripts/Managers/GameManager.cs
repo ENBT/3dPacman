@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
         gameOver = false;
         Time.timeScale = 1;
         PlayerBehavior.health = 100;
-        PlayerBehavior.energy = 0;
+        PlayerBehavior.energy = 100;
         startTime = Time.time;
         score = 0;
     }
