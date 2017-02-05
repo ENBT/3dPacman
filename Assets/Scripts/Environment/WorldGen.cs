@@ -61,14 +61,14 @@ public class WorldGen : MonoBehaviour {
                 GameObject tile = GameObject.Instantiate(WorldTiles[rand.Next(0, WorldTiles.Count)]);
                 tile.transform.position = new Vector3(j * tileSize, 0, -i * tileSize);
                 float rotation = GetRandRotation();
-                tile.transform.Rotate(0, rotation, 0);
+                //tile.transform.Rotate(0, rotation, 0);
 
-                if (rotation == 90)
-                    tile.GetComponentInChildren<TerrainCollider>().gameObject.transform.localPosition = new Vector3(20, 1, -20);
-                else if(rotation == 180)
-                    tile.GetComponentInChildren<TerrainCollider>().gameObject.transform.localPosition = new Vector3(20, 1, 20);
-                else if (rotation == 270)
-                    tile.GetComponentInChildren<TerrainCollider>().gameObject.transform.localPosition = new Vector3(-20, 1, 20);
+                //if (rotation == 90)
+                //    tile.GetComponentInChildren<TerrainCollider>().gameObject.transform.localPosition = new Vector3(20, .01f, -20);
+                //else if(rotation == 180)
+                //    tile.GetComponentInChildren<TerrainCollider>().gameObject.transform.localPosition = new Vector3(20, .01f, 20);
+                //else if (rotation == 270)
+                //    tile.GetComponentInChildren<TerrainCollider>().gameObject.transform.localPosition = new Vector3(-20, .01f, 20);
             }
         }
 
