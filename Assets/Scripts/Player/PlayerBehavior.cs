@@ -17,6 +17,9 @@ public class PlayerBehavior : MonoBehaviour
     private bool crouching = false;
     private float fallSpeed = 1;
 
+	public Animation anim;
+    private Vector3 camPos;
+
     [SerializeField]
     Transform playerModel;
 
@@ -35,6 +38,8 @@ public class PlayerBehavior : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        
+		anim = GetComponent<Animation> ();
         energy = 100;
         body = GetComponent<CharacterController>();
     }
@@ -42,9 +47,9 @@ public class PlayerBehavior : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        
+        camPos = Camera.main.transform.position;
+        aniHelp();
         Debug.Log(mega);
-
         move();
         glide();
         crouch();
@@ -55,12 +60,32 @@ public class PlayerBehavior : MonoBehaviour
         if (mega == true)
             megaTimer();
     }
+    
+    void aniHelp()
+    {
+        if (mega == true)
+        {
+            anim.Play("attack");
+        }
+        else if (inp.z != 0 && body.isGrounded)
+        {
+            anim.Play("run");
+        }
+        else if (inp.z == 0 && body.isGrounded)
+        {
+            anim.Play("idle");
+        }
+        else if (inp.y != 0 && !body.isGrounded)
+        {
+            anim.Play("jump");
+        }
+    }
 
     void move()
     {
-        inp.x = Input.GetAxis("Vertical");
-        inp.x *= movespeed;
-        inp = transform.TransformDirection(inp.x, inp.y, 0);
+		inp.z = Input.GetAxis("Vertical");
+		inp.z *= movespeed;
+		inp = transform.TransformDirection(0, inp.y, inp.z);
 
 
 
@@ -92,26 +117,22 @@ public class PlayerBehavior : MonoBehaviour
             if (crouching == false)
             {
                 movespeed *= 0.75f;
-                playerModel.localScale = new Vector3(1, .5f, 1);
-                SphereCollider sphere = transform.GetComponent<SphereCollider>();
-                sphere.radius *= 0.3f;
-                body.radius = .3f;
-                body.height = .25f;
-                body.center = new Vector3(0, -.15f, 0);
+                playerModel.localScale = new Vector3(.5f, .5f, .5f);
+                body.height = .75f;
+                body.center = new Vector3(0, .5f, 0);
+                Camera.main.transform.position = camPos;
             }
             crouching = true;
         }
         else
         {
             if (crouching == true)
-            {
+            {                
                 movespeed /= 0.75f;
-                playerModel.localScale = new Vector3(1, 1.0f, 1);
-                SphereCollider sphere = transform.GetComponent<SphereCollider>();
-                sphere.radius = 0.5f;
-                body.height = 1f;
-                body.radius = .5f;
-                body.center = new Vector3(0, 0, 0);
+                playerModel.localScale = new Vector3(1, 1, 1);
+                body.height = 1.5f;
+                body.center = new Vector3(0, .75f, 0);
+                Camera.main.transform.position = camPos;
             }
             crouching = false;
         }
@@ -122,7 +143,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (!body.isGrounded && Input.GetKey(KeyCode.Space) && inp.y < 0)
         {
-            fallSpeed = 0.01f;
+            fallSpeed = 0.1f;
         }
 
         else

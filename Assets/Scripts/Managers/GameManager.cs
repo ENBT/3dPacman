@@ -108,7 +108,8 @@ public class GameManager : MonoBehaviour
             }
             else if (paused == true)
             {
-                SceneManager.LoadScene("MainMenu");
+                endTime = Time.time - startTime;
+                SceneManager.LoadScene("Scoreboard");
             }
 
 

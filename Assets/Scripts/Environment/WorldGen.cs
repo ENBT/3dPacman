@@ -21,13 +21,16 @@ public class WorldGen : MonoBehaviour {
 
     public GameObject Ceiling;
 
-    
-
+    public bool genRandomOnStart = true;
     System.Random rand;
 
     // Use this for initialization
     void Start ()
     {
+        if (genRandomOnStart)
+        {
+            seed = Random.Range(0, 2000);
+        }
         rand = new System.Random(seed);
         GenWorld();
     }
