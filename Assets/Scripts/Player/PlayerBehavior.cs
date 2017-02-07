@@ -98,7 +98,7 @@ public class PlayerBehavior : MonoBehaviour
             }
         }
 
-        transform.Rotate(0, Input.GetAxis("Horizontal") * 1.5f, 0);
+        transform.Rotate(0, Input.GetAxis("Horizontal") * 3.0f, 0);
 
         if (!body.isGrounded)
             inp.y -= gravity * Time.deltaTime * fallSpeed;

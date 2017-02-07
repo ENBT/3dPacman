@@ -156,7 +156,6 @@ public class Enemy : MonoBehaviour {
             if (traveled < Speed * .1)
             {
                 Target = this.transform.position;
-                Debug.Log("Fuck this shit, I'm not moving.");
                 RandomRoam_Timer = RandomRoamTimer;
                 return;
             }

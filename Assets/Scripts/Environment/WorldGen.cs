@@ -329,8 +329,8 @@ public class WorldGen : MonoBehaviour
 
         
 
-        //terrain.terrainData.splatPrototypes = oldData.splatPrototypes;
-        //terrain.terrainData.SetAlphamaps(0, 0, newAlphaMap);
+        terrain.terrainData.splatPrototypes = oldData.splatPrototypes;
+        terrain.terrainData.SetAlphamaps(0, 0, newAlphaMap);
 
 
         Debug.Log("Trying");
