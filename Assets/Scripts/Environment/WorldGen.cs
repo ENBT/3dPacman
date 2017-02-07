@@ -65,16 +65,18 @@ public class WorldGen : MonoBehaviour
                 GameObject tile = GameObject.Instantiate(WorldTiles[rand.Next(0, WorldTiles.Count)]);
                 tile.transform.position = new Vector3(j * tileSize, 0, -i * tileSize);
 
-                //float rotation = GetRandRotation();
+                float rotation = 0;
+
+                //rotation = GetRandRotation();
                 //tile.transform.Rotate(0, rotation, 0);
                 //TerrainRotate(tile.GetComponentInChildren<TerrainCollider>().gameObject, rotation);
 
-                //if (rotation == 90)
-                //    tile.GetComponentInChildren<TerrainCollider>().gameObject.transform.localPosition = new Vector3(20, .01f, -20);
-                //else if(rotation == 180)
-                //    tile.GetComponentInChildren<TerrainCollider>().gameObject.transform.localPosition = new Vector3(20, .01f, 20);
-                //else if (rotation == 270)
-                //    tile.GetComponentInChildren<TerrainCollider>().gameObject.transform.localPosition = new Vector3(-20, .01f, 20);
+                if (rotation == 90)
+                    tile.GetComponentInChildren<TerrainCollider>().gameObject.transform.localPosition = new Vector3(20, .01f, -20);
+                else if(rotation == 180)
+                    tile.GetComponentInChildren<TerrainCollider>().gameObject.transform.localPosition = new Vector3(20, .01f, 20);
+                else if (rotation == 270)
+                    tile.GetComponentInChildren<TerrainCollider>().gameObject.transform.localPosition = new Vector3(-20, .01f, 20);
             }
         }
 
@@ -309,9 +311,29 @@ public class WorldGen : MonoBehaviour
         // Apply new data to terrain
 
         //Undo.RecordObject(terrain.terrainData,"Rotate terrain ("+angle+")"); // Undoing this kills unity..
+
+        TerrainData oldData = terrain.terrainData;
+
         terrain.terrainData = new TerrainData();
+
+        terrain.terrainData.size = new Vector3(2.5f, oldData.size.y, 2.5f);
+
+        terrain.terrainData.heightmapResolution = oldData.heightmapResolution;
+        terrain.terrainData.SetDetailResolution(oldData.detailResolution, 8);
+        terrain.terrainData.baseMapResolution = 1024;
+
+        terrain.terrainData.alphamapResolution = oldData.alphamapResolution;
+
         terrain.terrainData.SetHeights(0, 0, newHeightMap);
-        terrain.terrainData.SetAlphamaps(0, 0, newAlphaMap);
+        Debug.Log("Trying");
+
+        
+
+        //terrain.terrainData.splatPrototypes = oldData.splatPrototypes;
+        //terrain.terrainData.SetAlphamaps(0, 0, newAlphaMap);
+
+
+        Debug.Log("Trying");
         terrain.terrainData.treeInstances = newTrees;
         for (int n = 0; n < terrain.terrainData.detailPrototypes.Length; n++)
         {
