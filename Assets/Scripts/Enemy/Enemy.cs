@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour {
     [SerializeField]
     private double MinPelletDistance = 2;       //The min distance two pellets are allowed to spawn
 
+    public GameObject owner;
 
     private bool SeesPlayer = false;            //Whether or not this lil' bugger sees the player
     private Vector3 Origin;                     //Origin position the enemy is travelng from.
@@ -77,6 +78,21 @@ public class Enemy : MonoBehaviour {
         PlayerHit_Timer += Time.deltaTime;
 
         CalcPlayerDistance();
+
+        if (this.transform.position.y < 10)
+        {
+            try
+            {
+                owner.GetComponent<EnemySpawner>().EnemyDesrtroyed();
+            }
+            catch
+            {
+
+            }
+            Destroy(this.gameObject);
+        }
+            
+
 
         if (SeesPlayer)
             ChasePlayer();
@@ -236,6 +252,14 @@ public class Enemy : MonoBehaviour {
             if (PlayerBehavior.mega == true)
             {
                 GameManager.score += 1500;
+                try
+                {
+                    owner.GetComponent<EnemySpawner>().EnemyDesrtroyed();
+                }
+                catch
+                {
+
+                }
                 Destroy(this.gameObject);
             }
             else if (PlayerBehavior.invincible == false)

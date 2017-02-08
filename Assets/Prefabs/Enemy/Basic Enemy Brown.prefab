@@ -338,7 +338,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1098423308940958}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.09, y: 4.997055, z: 3.07}
+  m_LocalPosition: {x: 11.7, y: 24.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4034325992818482}
@@ -615,12 +615,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 220a438fd8f404c42986cbaa2167c173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SightDistance: 10
-  LoseSightDistance: 20
-  Speed: 5
-  MaxPellets: 10
+  SightDistance: 20
+  LoseSightDistance: 30
+  Speed: 9
+  MaxPellets: 5
   Poop: {fileID: 1476612612807896, guid: b075030a9f191084eb0f8bad57d48da9, type: 2}
   MinPelletDistance: 2
+  owner: {fileID: 0}
   RandomRoamTimer: 5
   MovementStuckTimer: 0.25
   SpawnPelletTimer: 5
