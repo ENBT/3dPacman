@@ -617,7 +617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SightDistance: 20
   LoseSightDistance: 30
-  Speed: 10
+  Speed: 13
   MaxPellets: 5
   Poop: {fileID: 1476612612807896, guid: b075030a9f191084eb0f8bad57d48da9, type: 2}
   MinPelletDistance: 2

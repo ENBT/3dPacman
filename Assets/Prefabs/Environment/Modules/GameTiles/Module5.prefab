@@ -2288,7 +2288,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1488052056179784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 61.41808, y: 223.02774, z: -192.74225}
+  m_LocalPosition: {x: 335.9109, y: 84.13732, z: -60.773624}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4868454685659908}
@@ -7112,14 +7112,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1938334148018956}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65161c99aafdbf7468566debb58f958c, type: 3}
+  m_Script: {fileID: 11500000, guid: be9267ef631d9964480e64407c7aa030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Enemies:
-  - {fileID: 1098423308940958, guid: df5b8646c3412a647a88ada6dd9cd5a2, type: 2}
-  - {fileID: 1892847371292180, guid: c5803a00de4de0b43ae02a7ead6e4c19, type: 2}
-  - {fileID: 1119270800546672, guid: a5f3c81bb89ee3d48b92388124fbe8db, type: 2}
   - {fileID: 1642697789547130, guid: e1d0f0ea580c4744e8a058a913d24ea6, type: 2}
+  - {fileID: 1119270800546672, guid: a5f3c81bb89ee3d48b92388124fbe8db, type: 2}
+  - {fileID: 1892847371292180, guid: c5803a00de4de0b43ae02a7ead6e4c19, type: 2}
+  - {fileID: 1098423308940958, guid: df5b8646c3412a647a88ada6dd9cd5a2, type: 2}
   SpawnTimer: 20
 --- !u!114 &114027347692029250
 MonoBehaviour:
