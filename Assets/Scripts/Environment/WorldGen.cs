@@ -62,6 +62,9 @@ public class WorldGen : MonoBehaviour
             for (int j = 0; j < Width; j++)
             {
 
+                if (i == 0 && j == 0)
+                    continue;
+
                 GameObject tile = GameObject.Instantiate(WorldTiles[rand.Next(0, WorldTiles.Count)]);
                 tile.transform.position = new Vector3(j * tileSize, 0, -i * tileSize);
 
